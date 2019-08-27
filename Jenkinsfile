@@ -24,9 +24,13 @@ node (label: 'FortifySCA')
     {
        fortifyTranslate addJVMOptions: '', buildID: 'MusicSite-DotNet', excludeList: '', logFile: '', maxHeap: '', projectScanType: fortifyAdvanced(advOptions: '"C:\\Program Files (x86)\\MSBuild\\14.0\\Bin\\msbuild.exe" MusicSite\\MusicSite.csproj')
     }
-      stage('Fortify Scan')
+    stage('Fortify Scan')
     {
         fortifyScan addJVMOptions: '', addOptions: '', buildID: 'MusicSite-DotNet', customRulepacks: '', logFile: '', maxHeap: '', resultsFile: 'MusicSite.fpr'
+    }
+    stage('Fortify Upload')
+    {
+        fortifyUpload appName: 'Music', appVersion: '1.1', failureCriteria: '', filterSet: '', pollingInterval: '1', resultsFile: 'MusicSite.fpr'
     }
   
 } 
