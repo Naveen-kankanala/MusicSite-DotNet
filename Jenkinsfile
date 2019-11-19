@@ -1,8 +1,21 @@
 node (label: 'FortifySCA')
 {  
+
+    def ApplicationName 	=	"Music"
+    def ApplicationVersion	=  	"1.1"
+    def bID		        	=	"MusicSite-DotNet"
+    def GitRepoURL	       	=	"https://github.com/bm-sushma/musicsite.git"
+    def FailureCriteria		=	"category: Path Manipulation"
+    def ResultsFile	    	=	"MusicSite.fpr"
+    def msbuild	        	=	"C:\\MSBUILD\\MSBuild\\15.0\\Bin\\MSBuild.exe"
+    def project	        	=	"C:\\Users\\Vivek001\\jenkins\\workspace\\MusicSite-DotNet\\MusicSite\\MusicSite.csproj"
+    def destination	    	=	"C:\\Users\\Vivek001\\jenkins\\workspace\\MusicSite-DotNet"
+    def ProjectPath		=	" "
+   
+   
     stage('Git')
     {
-        git 'https://github.com/bm-sushma/musicsite.git'
+        git GitRepoURL
     }
     stage('Code Build')
     {
@@ -14,7 +27,7 @@ node (label: 'FortifySCA')
     }
     stage('Fortify Clean')
     {
-        fortifyClean addJVMOptions: '', buildID: 'MusicSite-DotNet', logFile: '', maxHeap: ''
+        fortifyClean addJVMOptions: '', buildID: bID, logFile: '', maxHeap: ''
     }   
     stage('Fortify Update')
     {
@@ -22,15 +35,15 @@ node (label: 'FortifySCA')
     }
     stage('Fortify Translate')
     {
-       fortifyTranslate addJVMOptions: '', buildID: 'MusicSite-DotNet', excludeList: '', logFile: '', maxHeap: '', projectScanType: fortifyAdvanced(advOptions: '"C:\\Program Files (x86)\\MSBuild\\14.0\\Bin\\msbuild.exe" MusicSite\\MusicSite.csproj')
+       fortifyTranslate addJVMOptions: '', buildID: bID, excludeList: '', logFile: '', maxHeap: '', projectScanType: fortifyAdvanced(advOptions: '"C:\\Program Files (x86)\\MSBuild\\14.0\\Bin\\msbuild.exe" MusicSite\\MusicSite.csproj')
     }
     stage('Fortify Scan')
     {
-        fortifyScan addJVMOptions: '', addOptions: '', buildID: 'MusicSite-DotNet', customRulepacks: '', logFile: '', maxHeap: '', resultsFile: 'MusicSite.fpr'
+        fortifyScan addJVMOptions: '', addOptions: '', buildID: bID, customRulepacks: '', logFile: '', maxHeap: '', resultsFile: ResultsFile
     }
     stage('Fortify Upload')
     {
-        fortifyUpload appName: 'Music', appVersion: '1.1', failureCriteria: '', filterSet: '', pollingInterval: '1', resultsFile: 'MusicSite.fpr'
+        fortifyUpload appName: ApplicationName, appVersion: ApplicationVersion, failureCriteria: FailureCriteria, filterSet: '', pollingInterval: '1', resultsFile: ResultsFile
     }
   
 } 
