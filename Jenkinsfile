@@ -10,9 +10,7 @@ node (label: 'FortifySCA')
     def msbuild	        	=	"C:\\MSBUILD\\MSBuild\\15.0\\Bin\\MSBuild.exe"
     def project	        	=	"C:\\Users\\Vivek001\\jenkins\\workspace\\MusicSite-DotNet\\MusicSite\\MusicSite.csproj"
     def destination	    	=	"C:\\Users\\Vivek001\\jenkins\\workspace\\MusicSite-DotNet"
-    def ProjectPath		=	" "
-   
-   
+      
     stage('Git')
     {
         git GitRepoURL
